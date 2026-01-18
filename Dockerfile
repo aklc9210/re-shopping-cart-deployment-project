@@ -8,14 +8,9 @@ COPY gradle/ gradle/
 # Copy build files
 COPY build.gradle .
 COPY settings.gradle .
-
-# Copy source code
 COPY src/ src/
-
-# Build the application using gradle directly (gradle is already in the image)
 RUN gradle clean build -x test --no-daemon
 
-# Runtime stage
 FROM eclipse-temurin:21-jre-alpine
 
 WORKDIR /app
