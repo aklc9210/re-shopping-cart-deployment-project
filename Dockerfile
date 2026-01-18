@@ -15,11 +15,9 @@ FROM eclipse-temurin:21-jre-alpine
 
 WORKDIR /app
 
-# Create non-root user
 RUN addgroup -S spring && adduser -S spring -G spring
 USER spring:spring
 
-# Copy the built JAR from build stage
 COPY --from=build /app/build/libs/*.jar app.jar
 
 # Expose port
