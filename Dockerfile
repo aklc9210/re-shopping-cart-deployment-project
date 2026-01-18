@@ -3,20 +3,15 @@ FROM gradle:8.5-jdk21-alpine AS build
 
 WORKDIR /app
 
-# Copy Gradle wrapper and build files
-COPY gradlew .
-COPY gradle/ gradle/
+# Copy build files
 COPY build.gradle .
 COPY settings.gradle .
 
 # Copy source code
 COPY src/ src/
 
-# Grant execute permission for gradlew
-RUN chmod +x gradlew
-
-# Build the application
-RUN ./gradlew clean build -x test --no-daemon
+# Build the application using gradle directly (gradle is already in the image)
+RUN gradle clean build -x test --no-daemon
 
 # Runtime stage
 FROM eclipse-temurin:21-jre-alpine
